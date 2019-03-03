@@ -1,12 +1,10 @@
-const mongoose = require("mongoose");
-const passport = require("passport");
-
 const Profile = require("../models/Profile");
-const User = require("../models/User");
+const validateProfileInput = require("../validation/profileValidation");
 
 exports.getProfile = (req, res) => {
   const errors = {};
   Profile.findOne({ user: req.user._id })
+    .populate("user", ["name", "avatar"])
     .then(profile => {
       if (!profile) {
         errors.noprofile = "there is no profile for this user";
@@ -18,6 +16,11 @@ exports.getProfile = (req, res) => {
 };
 
 exports.postProfile = (req, res) => {
+  const { errors, isValid } = validateProfileInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   const profileFields = {};
   profileFields.user = req.user._id;
   if (req.body.handle) profileFields.handle = req.body.handle;

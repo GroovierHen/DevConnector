@@ -12,7 +12,7 @@ router.get(
   profileController.getProfile
 );
 
-router.get(
+router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   profileController.postProfile
