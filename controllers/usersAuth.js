@@ -1,8 +1,11 @@
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // User Model A5Wyj6VaZ*V!56!$&j28X2zfvAQTZ6HQc
 const User = require("../models/User");
+
+const keys = require("../config/keys");
 
 // POST Route, User Registration
 exports.userRegister = (req, res) => {
@@ -47,7 +50,14 @@ exports.userLogin = (req, res) => {
 
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
-        res.json({ message: "Success" });
+        const payload = {
+          id: user._id,
+          name: user.name,
+          avatar: user.avatar
+        };
+        jwt.sign(payload, keys.secretOrKey, (err, token) => {
+          res.json({ success: true, token: `Bearer ${token}` });
+        });
       } else {
         return res.status(400).json({ error: "Password incorrect" });
       }
