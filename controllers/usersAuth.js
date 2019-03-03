@@ -1,14 +1,14 @@
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 
-// User Model
+// User Model A5Wyj6VaZ*V!56!$&j28X2zfvAQTZ6HQc
 const User = require("../models/User");
 
 // POST Route, User Registration
 exports.userRegister = (req, res) => {
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ email: "email already exists" });
+      return res.status(400).json({ error: "Email already exists" });
     } else {
       const avatar = gravatar.url(req.body.email, {
         s: 200,
@@ -32,5 +32,25 @@ exports.userRegister = (req, res) => {
         });
       });
     }
+  });
+};
+
+// POST Route, User Login
+exports.userLogin = (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  User.findOne({ email: email }).then(user => {
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    bcrypt.compare(password, user.password).then(isMatch => {
+      if (isMatch) {
+        res.json({ message: "Success" });
+      } else {
+        return res.status(400).json({ error: "Password incorrect" });
+      }
+    });
   });
 };
