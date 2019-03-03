@@ -4,14 +4,21 @@ const jwt = require("jsonwebtoken");
 
 // User Model A5Wyj6VaZ*V!56!$&j28X2zfvAQTZ6HQc
 const User = require("../models/User");
-
 const keys = require("../config/keys");
+const validateRegisterInput = require("../validation/register");
+const validateLoginInput = require("../validation/login");
 
 // POST Route, User Registration
 exports.userRegister = (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ error: "Email already exists" });
+      errors.email = "Email already exists";
+      return res.status(400).json(errors);
     } else {
       const avatar = gravatar.url(req.body.email, {
         s: 200,
@@ -40,12 +47,18 @@ exports.userRegister = (req, res) => {
 
 // POST Route, User Login
 exports.userLogin = (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   const email = req.body.email;
   const password = req.body.password;
 
   User.findOne({ email: email }).then(user => {
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      errors.email = "User not found";
+      return res.status(404).json(errors);
     }
 
     bcrypt.compare(password, user.password).then(isMatch => {
@@ -59,7 +72,8 @@ exports.userLogin = (req, res) => {
           res.json({ success: true, token: `Bearer ${token}` });
         });
       } else {
-        return res.status(400).json({ error: "Password incorrect" });
+        errors.password = "Password incorrect";
+        return res.status(400).json(errors);
       }
     });
   });

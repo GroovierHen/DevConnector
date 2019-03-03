@@ -33,6 +33,7 @@ app.get(
     res.json(req.user);
   }
 );
+
 // Use Routes
 app.use("/api/users", users);
 app.use("/api/profile", profile);
