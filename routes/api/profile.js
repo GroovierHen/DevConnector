@@ -29,18 +29,39 @@ router.get("/user/:user_id", profileController.getProfileByID);
 // Get All Profiles
 router.get("/all", profileController.getAllProfiles);
 
-//Post Experience
+// Post Experience
 router.post(
   "/experience",
   passport.authenticate("jwt", { session: false }),
   profileController.postExperience
 );
 
-//Post Education
+// Post Education
 router.post(
   "/education",
   passport.authenticate("jwt", { session: false }),
   profileController.postEducation
+);
+
+// Delete Experience
+router.delete(
+  "/experience/:exp_id",
+  passport.authenticate("jwt", { session: false }),
+  profileController.deleteExperience
+);
+
+// Delete Education
+router.delete(
+  "/education/:edu_id",
+  passport.authenticate("jwt", { session: false }),
+  profileController.deleteEducation
+);
+
+// Delete User and Profile
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  profileController.deleteUser
 );
 
 module.exports = router;

@@ -1,3 +1,4 @@
+const User = require("../models/User");
 const Profile = require("../models/Profile");
 const validateProfileInput = require("../validation/profileValidation");
 const validateExperienceInput = require("../validation/experienceValidation");
@@ -156,5 +157,45 @@ exports.postEducation = (req, res) => {
     };
     profile.education.unshift(newEdu);
     profile.save().then(profile => res.json(profile));
+  });
+};
+
+// Delete Experience
+exports.deleteExperience = (req, res) => {
+  Profile.findOne({ user: req.user._id }).then(profile => {
+    const removeIndex = profile.experience
+      .map(item => item._id)
+      .indexOf(req.params.exp_id);
+
+    profile.experience.splice(removeIndex, 1);
+
+    profile
+      .save()
+      .then(profile => res.json(profile))
+      .catch(err => res.status(404).json(err));
+  });
+};
+
+// Delete Education
+exports.deleteEducation = (req, res) => {
+  Profile.findOne({ user: req.user._id }).then(profile => {
+    const removeIndex = profile.education
+      .map(item => item._id)
+      .indexOf(req.params.edu_id);
+    profile.education.splice(removeIndex, 1);
+
+    profile
+      .save()
+      .then(profile => res.json(profile))
+      .catch(err => res.status(404).json(err));
+  });
+};
+
+// Delete User and Profile
+exports.deleteUser = (req, res) => {
+  Profile.findOneAndRemove({ user: req.user._id }).then(() => {
+    User.findOneAndRemove({ _id: req.user._id }).then(() =>
+      res.json({ success: true })
+    );
   });
 };
