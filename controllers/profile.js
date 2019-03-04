@@ -1,8 +1,12 @@
 const Profile = require("../models/Profile");
 const validateProfileInput = require("../validation/profileValidation");
+const validateExperienceInput = require("../validation/experienceValidation");
+const validateEducationInput = require("../validation//educationValidation");
 
+// Get Profile
 exports.getProfile = (req, res) => {
   const errors = {};
+
   Profile.findOne({ user: req.user._id })
     .populate("user", ["name", "avatar"])
     .then(profile => {
@@ -15,6 +19,57 @@ exports.getProfile = (req, res) => {
     .catch(err => res.status(404).json(err));
 };
 
+// Get All Profiles
+exports.getAllProfiles = (req, res) => {
+  const errors = {};
+
+  Profile.find()
+    .populate("user", ["name", "avatar"])
+    .then(profiles => {
+      if (!profiles) {
+        errors.noProfile = "There are no Profiles";
+        return res.status(404).json({ errors });
+      }
+      res.json(profiles);
+    })
+    .catch(err => res.status(404).json({ profile: "There are no profiles" }));
+};
+
+//Get Profile by Handle
+exports.getProfileByHandle = (req, res) => {
+  const errors = {};
+
+  Profile.findOne({ handle: req.params.handle })
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = "there is no profile for this user";
+        res.status(404).json(errors);
+      }
+      res.json(profile);
+    })
+    .catch(err => res.status(404).json(err));
+};
+
+//Get Profile by ID
+exports.getProfileByID = (req, res) => {
+  const errors = {};
+
+  Profile.findOne({ user: req.params.user_id })
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = "there is no profile for this user";
+        res.status(404).json(errors);
+      }
+      res.json(profile);
+    })
+    .catch(err =>
+      res.status(404).json({ profile: "there is no profile for this user" })
+    );
+};
+
+// Create Profile
 exports.postProfile = (req, res) => {
   const { errors, isValid } = validateProfileInput(req.body);
   if (!isValid) {
@@ -57,5 +112,49 @@ exports.postProfile = (req, res) => {
         new Profile(profileFields).save().then(profile => res.json(profile));
       });
     }
+  });
+};
+
+// Post Experience
+exports.postExperience = (req, res) => {
+  const { errors, isValid } = validateExperienceInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  Profile.findOne({ user: req.user._id }).then(profile => {
+    const newExp = {
+      title: req.body.title,
+      company: req.body.company,
+      location: req.body.location,
+      from: req.body.from,
+      to: req.body.to,
+      current: req.body.current,
+      description: req.body.description
+    };
+    profile.experience.unshift(newExp);
+    profile.save().then(profile => res.json(profile));
+  });
+};
+
+// Post Education
+exports.postEducation = (req, res) => {
+  const { errors, isValid } = validateEducationInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  Profile.findOne({ user: req.user._id }).then(profile => {
+    const newEdu = {
+      school: req.body.school,
+      degree: req.body.degree,
+      fieldofstudy: req.body.fieldofstudy,
+      from: req.body.from,
+      to: req.body.to,
+      current: req.body.current,
+      description: req.body.description
+    };
+    profile.education.unshift(newEdu);
+    profile.save().then(profile => res.json(profile));
   });
 };
