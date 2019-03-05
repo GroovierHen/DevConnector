@@ -26,14 +26,6 @@ mongoose
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
-app.get(
-  "/current",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.json(req.user);
-  }
-);
-
 // Use Routes
 app.use("/api/users", users);
 app.use("/api/profile", profile);
