@@ -40,7 +40,7 @@ class Navbar extends Component {
                   </Typography>
                 </Link>
                 <Hidden only='xs'>
-                  <Link to='/'>Devlopers</Link>
+                  <Link to='/profiles'>Devlopers</Link>
                 </Hidden>
               </Toolbar>
             </Grid>
