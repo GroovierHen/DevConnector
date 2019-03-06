@@ -1,28 +1,49 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { Grid, Typography, Button } from "@material-ui/core";
 
+import { loginUser } from "../../store/actions/authActions";
 import TextField from "../common/TextField";
 
 class Signin extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    errors: {}
   };
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   handleSubmit = () => {
-    const user = {
+    const userData = {
       email: this.state.email,
       password: this.state.password
     };
-
-    console.log(user);
+    this.props.loginUser(userData);
   };
 
   render() {
+    const { errors } = this.state;
+
     return (
       <Grid container>
         <Grid style={styles.container}>
@@ -41,6 +62,8 @@ class Signin extends Component {
               name='email'
               value={this.state.email}
               onChange={this.handleChange}
+              error={errors.email ? true : false}
+              errorText={errors.email ? errors.email : false}
             />
             <TextField
               label='Password'
@@ -48,6 +71,8 @@ class Signin extends Component {
               name='password'
               value={this.state.password}
               onChange={this.handleChange}
+              error={errors.password ? true : false}
+              errorText={errors.password ? errors.password : false}
             />
             <Button
               variant='contained'
@@ -81,4 +106,18 @@ const styles = {
   }
 };
 
-export default Signin;
+Signin.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = store => ({
+  auth: store.auth,
+  errors: store.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(Signin);

@@ -7,8 +7,6 @@ import Footer from "./components/layout/Footer";
 import Signin from "./components/auth/Signin";
 import Signup from "./components/auth/Signup";
 
-import "./App.css";
-
 class App extends Component {
   render() {
     return (

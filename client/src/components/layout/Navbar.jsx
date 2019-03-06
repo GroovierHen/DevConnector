@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import MenuIcon from "@material-ui/icons/Menu";
 import {
   AppBar,
@@ -11,9 +13,11 @@ import {
   SwipeableDrawer,
   List,
   ListItem,
-  ListItemText
+  ListItemText,
+  Avatar
 } from "@material-ui/core";
 
+import { logoutUser } from "../../store/actions/authActions";
 import styles from "./navbar.module.css";
 
 class Navbar extends Component {
@@ -27,7 +31,35 @@ class Navbar extends Component {
     });
   };
 
+  handleLogout = () => {
+    this.props.logoutUser();
+  };
+
   render() {
+    const { isAuthenticated, user } = this.props.auth;
+    const authLinks = (
+      <ul className={styles.ul}>
+        <li>
+          <Link to='' onClick={this.handleLogout}>
+            Logout
+          </Link>
+        </li>
+        <li>
+          <Avatar src={user.avatar} alt={user.name} />
+        </li>
+      </ul>
+    );
+    const guestLinks = (
+      <ul className={styles.ul}>
+        <li>
+          <Link to='/signup'>Sign Up</Link>
+        </li>
+        <li>
+          <Link to='/signin'>Sign In</Link>
+        </li>
+      </ul>
+    );
+
     return (
       <AppBar className={styles.header} position='static'>
         <div className={styles.container}>
@@ -56,14 +88,15 @@ class Navbar extends Component {
                 </IconButton>
               </Hidden>
               <Hidden xsDown>
-                <ul className={styles.ul}>
+                {isAuthenticated ? authLinks : guestLinks}
+                {/* <ul className={styles.ul}>
                   <li>
                     <Link to='/signup'>Sign Up</Link>
                   </li>
                   <li>
                     <Link to='/signin'>Sign In</Link>
                   </li>
-                </ul>
+                </ul> */}
               </Hidden>
             </Grid>
           </Grid>
@@ -85,7 +118,18 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+Navbar.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = store => ({
+  auth: store.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Navbar);
 
 // isTop: true,
 // document.addEventListener("scroll", () => {
