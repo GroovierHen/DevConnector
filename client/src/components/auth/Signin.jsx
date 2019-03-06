@@ -1,10 +1,27 @@
 import React, { Component } from "react";
 import { Grid, Typography, Button } from "@material-ui/core";
 
-// import Input from "../layout/TextField";
+import TextField from "../common/TextField";
 
 class Signin extends Component {
-  state = {};
+  state = {
+    email: "",
+    password: ""
+  };
+
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleSubmit = () => {
+    const user = {
+      email: this.state.email,
+      password: this.state.password
+    };
+
+    console.log(user);
+  };
+
   render() {
     return (
       <Grid container>
@@ -18,13 +35,26 @@ class Signin extends Component {
             <Typography style={styles.subtitle}>
               Sign in to your DevConnector account
             </Typography>
-            {/* <Input label='Email Address' type='email' name='email' />
-            <Input label='Password' type='password' name='password' /> */}
+            <TextField
+              label='Email Address'
+              type='email'
+              name='email'
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+            <TextField
+              label='Password'
+              type='password'
+              name='password'
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
             <Button
               variant='contained'
               color='primary'
-              fullWidth
               style={{ marginTop: "16px" }}
+              onClick={this.handleSubmit}
+              fullWidth
             >
               Sign In
             </Button>
