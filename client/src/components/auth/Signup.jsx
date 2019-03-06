@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import axios from "axios";
 import { Grid, Typography, Button } from "@material-ui/core";
 
 import { registerUser } from "../../store/actions/authActions";
@@ -15,6 +15,12 @@ class Signup extends Component {
     errors: {}
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -26,16 +32,12 @@ class Signup extends Component {
       password: this.state.password
     };
 
-    this.props.registerUser(newUser);
-
-    // axios
-    //   .post("/api/users/register", newUser)
-    //   .then(res => console.log(res))
-    //   .catch(err => this.setState({ errors: err.response.data }));
+    this.props.registerUser(newUser, this.props.history);
   };
 
   render() {
     const { errors } = this.state;
+
     return (
       <Grid container>
         <Grid style={styles.container}>
@@ -109,14 +111,16 @@ const styles = {
 
 Signup.propTypes = {
   registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = store => ({
-  auth: store.auth
+  auth: store.auth,
+  errors: store.errors
 });
 
 export default connect(
   mapStateToProps,
   { registerUser }
-)(Signup);
+)(withRouter(Signup));

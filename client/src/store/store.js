@@ -2,8 +2,12 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 
 import authReducer from "./reducers/authReducer";
+import errorReducer from "./reducers/errorReducer";
 
-const rootreducer = combineReducers({ auth: authReducer });
+const rootreducer = combineReducers({
+  auth: authReducer,
+  errors: errorReducer
+});
 const middleware = [thunk];
 
 const store = createStore(
