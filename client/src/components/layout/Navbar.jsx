@@ -18,6 +18,7 @@ import {
 } from "@material-ui/core";
 
 import { logoutUser } from "../../store/actions/authActions";
+import { clearCurrentProfile } from "../../store/actions/profileActions";
 import styles from "./navbar.module.css";
 
 class Navbar extends Component {
@@ -32,6 +33,7 @@ class Navbar extends Component {
   };
 
   handleLogout = () => {
+    this.props.clearCurrentProfile();
     this.props.logoutUser();
   };
 
@@ -87,17 +89,7 @@ class Navbar extends Component {
                   <MenuIcon />
                 </IconButton>
               </Hidden>
-              <Hidden xsDown>
-                {isAuthenticated ? authLinks : guestLinks}
-                {/* <ul className={styles.ul}>
-                  <li>
-                    <Link to='/signup'>Sign Up</Link>
-                  </li>
-                  <li>
-                    <Link to='/signin'>Sign In</Link>
-                  </li>
-                </ul> */}
-              </Hidden>
+              <Hidden xsDown>{isAuthenticated ? authLinks : guestLinks}</Hidden>
             </Grid>
           </Grid>
         </div>
@@ -128,7 +120,7 @@ const mapStateToProps = store => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, clearCurrentProfile }
 )(Navbar);
 
 // isTop: true,

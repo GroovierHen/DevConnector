@@ -3,12 +3,14 @@ import thunk from "redux-thunk";
 
 import authReducer from "./reducers/authReducer";
 import errorReducer from "./reducers/errorReducer";
+import profileReducer from "./reducers/profileReducer";
 
+const middleware = [thunk];
 const rootreducer = combineReducers({
   auth: authReducer,
-  errors: errorReducer
+  errors: errorReducer,
+  profile: profileReducer
 });
-const middleware = [thunk];
 
 const store = createStore(
   rootreducer,
