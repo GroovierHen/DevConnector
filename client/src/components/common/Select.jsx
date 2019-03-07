@@ -1,8 +1,8 @@
 import React from "react";
-import { TextField } from "@material-ui/core";
+import { TextField, MenuItem } from "@material-ui/core";
 
 const Select = props => {
-  const { label, name, value, onChange, error, errorText } = props;
+  const { label, name, value, onChange, error, errorText, options } = props;
   return (
     <TextField
       label={label}
@@ -14,8 +14,15 @@ const Select = props => {
       select
       margin='normal'
       variant='outlined'
+      required
       fullWidth
-    />
+    >
+      {options.map(option => (
+        <MenuItem key={option.value} value={option.value}>
+          {option.label}
+        </MenuItem>
+      ))}
+    </TextField>
   );
 };
 

@@ -12,7 +12,7 @@ const TextArea = props => {
       error={error}
       helperText={errorText}
       multiline
-      rowsMax='5'
+      rows='4'
       margin='normal'
       variant='outlined'
       fullWidth

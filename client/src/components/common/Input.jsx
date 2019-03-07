@@ -1,8 +1,17 @@
 import React from "react";
-import { TextField } from "@material-ui/core";
+import { TextField, InputAdornment } from "@material-ui/core";
 
 const Input = props => {
-  const { label, name, value, onChange, error, errorText } = props;
+  const {
+    label,
+    name,
+    value,
+    onChange,
+    error,
+    errorText,
+    icon,
+    placeholder
+  } = props;
   return (
     <TextField
       label={label}
@@ -11,10 +20,17 @@ const Input = props => {
       onChange={onChange}
       error={error}
       helperText={errorText}
-      select
+      placeholder={placeholder}
       margin='normal'
       variant='outlined'
       fullWidth
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position='start'>
+            <i className={icon} />
+          </InputAdornment>
+        )
+      }}
     />
   );
 };

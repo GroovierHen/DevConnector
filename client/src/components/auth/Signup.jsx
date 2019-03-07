@@ -62,6 +62,7 @@ class Signup extends Component {
               name='name'
               value={this.state.name}
               onChange={this.handleChange}
+              required={true}
               error={errors.name ? true : false}
               errorText={errors.name ? errors.name : false}
             />
@@ -71,6 +72,7 @@ class Signup extends Component {
               name='email'
               value={this.state.email}
               onChange={this.handleChange}
+              required={true}
               error={errors.email ? true : false}
               errorText={errors.email ? errors.email : false}
             />
@@ -80,6 +82,7 @@ class Signup extends Component {
               name='password'
               value={this.state.password}
               onChange={this.handleChange}
+              required={true}
               error={errors.password ? true : false}
               errorText={errors.password ? errors.password : false}
             />
