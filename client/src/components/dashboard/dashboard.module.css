@@ -1,0 +1,9 @@
+.container {
+  width: 71%;
+  margin: 30px auto;
+}
+
+.container h6 {
+  color: #6c757d;
+  font-weight: 300;
+}

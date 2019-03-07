@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+
+import PrivateRoute from "./components/common/PrivateRoute";
 
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
@@ -17,7 +19,9 @@ class App extends Component {
           <Route exact path='/' component={Landing} />
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/signin' component={Signin} />
-          <Route exact path='/dashboard' component={Dashboard} />
+          <Switch>
+            <PrivateRoute exact path='/dashboard' component={Dashboard} />
+          </Switch>
           <Footer />
         </div>
       </BrowserRouter>

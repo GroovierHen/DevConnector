@@ -23,12 +23,12 @@ class Landing extends Component {
               Create a developer profile/portfolio, share posts and get help
               from other developers
             </Typography>
-            <Link to='/signup' style={{ textDecoration: "none" }}>
+            <Link to='/signup'>
               <Button variant='contained' size='large' color='primary'>
                 Sign Up
               </Button>
             </Link>
-            <Link to='/signin' style={{ textDecoration: "none" }}>
+            <Link to='/signin'>
               <Button variant='contained' size='large'>
                 Sign In
               </Button>
