@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import { Grid, Typography, FormHelperText, Button } from "@material-ui/core";
 
 import styles from "./createprofile.module.css";
@@ -8,6 +9,7 @@ import TextField from "../common/TextField";
 import TextArea from "../common/TextArea";
 import Input from "../common/Input";
 import Select from "../common/Select";
+import { createProfile } from "../../store/actions/profileActions";
 
 class CreateProfile extends Component {
   state = {
@@ -28,12 +30,34 @@ class CreateProfile extends Component {
     errors: {}
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   handleSubmit = () => {
-    console.log(this.state);
+    const profileData = {
+      handle: this.state.handle,
+      company: this.state.company,
+      website: this.state.website,
+      location: this.state.location,
+      status: this.state.status,
+      skills: this.state.skills,
+      githubusername: this.state.githubusername,
+      bio: this.state.bio,
+      twitter: this.state.twitter,
+      facebook: this.state.facebook,
+      linkedin: this.state.linkedin,
+      youtube: this.state.youtube,
+      instagram: this.state.instagram
+    };
+
+    this.props.createProfile(profileData, this.props.history);
   };
 
   render() {
@@ -127,6 +151,7 @@ class CreateProfile extends Component {
                 type='text'
                 name='skills'
                 value={this.state.skills}
+                required={true}
                 onChange={this.handleChange}
                 error={errors.skills ? true : false}
                 errorText={errors.skills ? errors.skills : false}
@@ -247,4 +272,7 @@ const mapStateToProps = store => ({
   errors: store.errors
 });
 
-export default connect(mapStateToProps)(CreateProfile);
+export default connect(
+  mapStateToProps,
+  { createProfile }
+)(withRouter(CreateProfile));

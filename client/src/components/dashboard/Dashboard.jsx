@@ -4,7 +4,11 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Grid, Typography, CircularProgress, Button } from "@material-ui/core";
 
-import { getCurrentProfile } from "../../store/actions/profileActions";
+import ProfileActions from "./components/ProfileActions";
+import {
+  getCurrentProfile,
+  deleteAccount
+} from "../../store/actions/profileActions";
 import styles from "./dashboard.module.css";
 
 class Dashboard extends Component {
@@ -13,6 +17,10 @@ class Dashboard extends Component {
   componentDidMount() {
     this.props.getCurrentProfile();
   }
+
+  handleDeleteAccount = () => {
+    this.props.deleteAccount();
+  };
 
   render() {
     const { user } = this.props.auth;
@@ -27,7 +35,27 @@ class Dashboard extends Component {
       );
     } else {
       if (Object.keys(profile).length > 0) {
-        dashboardContent = <h4>Display Profile</h4>;
+        dashboardContent = (
+          <div>
+            <Typography variant='h6'>
+              Welcome{" "}
+              <Link
+                className={styles.profilea}
+                to={`/profile/${profile.handle}`}
+              >
+                {user.name}
+              </Link>
+            </Typography>
+            <ProfileActions />
+            <Button
+              onClick={this.handleDeleteAccount}
+              variant='contained'
+              color='secondary'
+            >
+              Delete My Account
+            </Button>
+          </div>
+        );
       } else {
         dashboardContent = (
           <div>
@@ -60,6 +88,7 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
+  deleteAccount: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -71,5 +100,5 @@ const mapStateToProps = store => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile }
+  { getCurrentProfile, deleteAccount }
 )(Dashboard);
