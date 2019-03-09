@@ -42,6 +42,9 @@ class Navbar extends Component {
     const authLinks = (
       <ul className={styles.ul}>
         <li>
+          <Link to='/dashboard'>Dashboard</Link>
+        </li>
+        <li>
           <Link to='/signin' onClick={this.handleLogout}>
             Logout
           </Link>
