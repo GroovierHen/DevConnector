@@ -4,12 +4,13 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Grid, Typography, CircularProgress, Button } from "@material-ui/core";
 
+import styles from "./dashboard.module.css";
+import Experience from "./components/Experience";
 import ProfileActions from "./components/ProfileActions";
 import {
   getCurrentProfile,
   deleteAccount
 } from "../../store/actions/profileActions";
-import styles from "./dashboard.module.css";
 
 class Dashboard extends Component {
   state = {};
@@ -47,6 +48,7 @@ class Dashboard extends Component {
               </Link>
             </Typography>
             <ProfileActions />
+            <Experience experience={profile.experience} />
             <Button
               onClick={this.handleDeleteAccount}
               variant='contained'
@@ -60,7 +62,9 @@ class Dashboard extends Component {
         dashboardContent = (
           <div>
             <Typography variant='h6'>Welcome {user.name}</Typography>
-            <p>You have not set up your profile yet</p>
+            <p style={{ textAlign: "left" }}>
+              You have not set up your profile yet
+            </p>
             <Link to='/create-profile'>
               <Button variant='contained' size='large' color='primary'>
                 Create Profile

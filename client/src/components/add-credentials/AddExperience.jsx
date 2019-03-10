@@ -11,6 +11,7 @@ import {
   Button
 } from "@material-ui/core";
 
+import { addExperience } from "../../store/actions/profileActions";
 import styles from "./addcredentials.module.css";
 import TextField from "../common/TextField";
 import TextArea from "../common/TextArea";
@@ -28,12 +29,28 @@ class AddExperience extends Component {
     errors: {}
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   handleSubmit = () => {
-    console.log("Submit");
+    const expData = {
+      company: this.state.company,
+      title: this.state.title,
+      location: this.state.location,
+      from: this.state.from,
+      to: this.state.to,
+      current: this.state.current,
+      description: this.state.description
+    };
+
+    this.props.addExperience(expData, this.props.history);
   };
 
   handleCheck = () => {
@@ -147,6 +164,7 @@ class AddExperience extends Component {
 }
 
 AddExperience.propTypes = {
+  addExperience: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -156,4 +174,7 @@ const mapStateToProps = store => ({
   errors: store.errors
 });
 
-export default connect(mapStateToProps)(withRouter(AddExperience));
+export default connect(
+  mapStateToProps,
+  { addExperience }
+)(withRouter(AddExperience));

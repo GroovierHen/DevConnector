@@ -163,11 +163,13 @@ exports.postEducation = (req, res) => {
 // Delete Experience
 exports.deleteExperience = (req, res) => {
   Profile.findOne({ user: req.user._id }).then(profile => {
-    const removeIndex = profile.experience
-      .map(item => item._id)
-      .indexOf(req.params.exp_id);
+    // const removeIndex = profile.experience
+    //   .map(item => item._id)
+    //   .indexOf(req.params.exp_id);
 
-    profile.experience.splice(removeIndex, 1);
+    // profile.experience.splice(removeIndex, 1);
+
+    profile.experience.id(req.params.exp_id).remove();
 
     profile
       .save()
