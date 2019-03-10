@@ -10,7 +10,8 @@ const Input = props => {
     onChange,
     error,
     errorText,
-    required
+    required,
+    disabled
   } = props;
   return (
     <TextField
@@ -24,6 +25,7 @@ const Input = props => {
       margin='normal'
       variant='outlined'
       required={required}
+      disabled={disabled}
       fullWidth
     />
   );
