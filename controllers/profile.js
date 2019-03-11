@@ -166,7 +166,6 @@ exports.deleteExperience = (req, res) => {
     // const removeIndex = profile.experience
     //   .map(item => item._id)
     //   .indexOf(req.params.exp_id);
-
     // profile.experience.splice(removeIndex, 1);
 
     profile.experience.id(req.params.exp_id).remove();
@@ -181,10 +180,12 @@ exports.deleteExperience = (req, res) => {
 // Delete Education
 exports.deleteEducation = (req, res) => {
   Profile.findOne({ user: req.user._id }).then(profile => {
-    const removeIndex = profile.education
-      .map(item => item._id)
-      .indexOf(req.params.edu_id);
-    profile.education.splice(removeIndex, 1);
+    // const removeIndex = profile.education
+    //   .map(item => item._id)
+    //   .indexOf(req.params.edu_id);
+    // profile.education.splice(removeIndex, 1);
+
+    profile.education.id(req.params.edu_id).remove();
 
     profile
       .save()

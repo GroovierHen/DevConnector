@@ -6,6 +6,7 @@ import { Grid, Typography, CircularProgress, Button } from "@material-ui/core";
 
 import styles from "./dashboard.module.css";
 import Experience from "./components/Experience";
+import Education from "./components/Education";
 import ProfileActions from "./components/ProfileActions";
 import {
   getCurrentProfile,
@@ -49,6 +50,7 @@ class Dashboard extends Component {
             </Typography>
             <ProfileActions />
             <Experience experience={profile.experience} />
+            <Education education={profile.education} />
             <Button
               onClick={this.handleDeleteAccount}
               variant='contained'
