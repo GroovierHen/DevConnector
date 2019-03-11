@@ -2,15 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Moment from "react-moment";
-import {
-  Button,
-  Typography,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell
-} from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 // import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 
 // import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
@@ -25,18 +17,18 @@ class Education extends Component {
 
   render() {
     const education = this.props.education.map(edu => (
-      <TableRow key={edu._id}>
-        <TableCell>{edu.school}</TableCell>
-        <TableCell>{edu.degree}</TableCell>
-        <TableCell>
+      <tr key={edu._id}>
+        <td>{edu.school}</td>
+        <td>{edu.degree}</td>
+        <td>
           <Moment format='YYYY/MM/DD'>{edu.from}</Moment> -
           {edu.to === null ? (
             " Now"
           ) : (
             <Moment format='YYYY/MM/DD'>{edu.to}</Moment>
           )}
-        </TableCell>
-        <TableCell>
+        </td>
+        <td>
           <Button
             variant='contained'
             color='secondary'
@@ -44,8 +36,8 @@ class Education extends Component {
           >
             Delete
           </Button>
-        </TableCell>
-      </TableRow>
+        </td>
+      </tr>
     ));
 
     return (
@@ -53,17 +45,17 @@ class Education extends Component {
         <Typography variant='h4' gutterBottom>
           Education Credentials
         </Typography>
-        <Table style={{ margin: "0 0 50px 0" }}>
-          <TableHead>
-            <TableRow>
-              <TableCell>School</TableCell>
-              <TableCell>Degree</TableCell>
-              <TableCell>Years</TableCell>
-              <TableCell />
-            </TableRow>
-          </TableHead>
-          <TableBody>{education}</TableBody>
-        </Table>
+        <table className='table'>
+          <thead>
+            <tr>
+              <th>School</th>
+              <th>Degree</th>
+              <th>Years</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>{education}</tbody>
+        </table>
       </div>
     );
   }

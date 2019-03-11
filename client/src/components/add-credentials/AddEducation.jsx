@@ -138,7 +138,7 @@ class AddEducation extends Component {
                     color='primary'
                   />
                 }
-                label='Current Job'
+                label='Current'
               />
               <TextArea
                 label='Program Description'

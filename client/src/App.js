@@ -13,6 +13,7 @@ import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import AddExperience from "./components/add-credentials/AddExperience";
 import AddEducation from "./components/add-credentials/AddEducation";
+import Profiles from "./components/profiles/Profiles";
 
 class App extends Component {
   render() {
@@ -23,6 +24,7 @@ class App extends Component {
           <Route exact path='/' component={Landing} />
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/signin' component={Signin} />
+          <Route exact path='/profiles' component={Profiles} />
           <Switch>
             <PrivateRoute exact path='/dashboard' component={Dashboard} />
           </Switch>

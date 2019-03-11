@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Grid, Typography, CircularProgress, Button } from "@material-ui/core";
+import { Typography, CircularProgress, Button } from "@material-ui/core";
 
 import styles from "./dashboard.module.css";
 import Experience from "./components/Experience";
@@ -78,15 +78,17 @@ class Dashboard extends Component {
     }
 
     return (
-      <div className={styles.container}>
-        <Grid container>
-          <Grid item md={12}>
-            <Typography component='h1' variant='h2' gutterBottom>
-              Dashboard
-            </Typography>
-            {dashboardContent}
-          </Grid>
-        </Grid>
+      <div className='dashboard' style={{ padding: "20px 0" }}>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-12'>
+              <Typography component='h1' variant='h2' gutterBottom>
+                Dashboard
+              </Typography>
+              {dashboardContent}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
