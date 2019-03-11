@@ -35,8 +35,8 @@ class Profiles extends Component {
     return (
       <div className='profiles'>
         <div className='container'>
-          <div class='row'>
-            <div class='col-md-12'>
+          <div className='row'>
+            <div className='col-md-12'>
               <Typography
                 className='mt-3'
                 variant='h2'

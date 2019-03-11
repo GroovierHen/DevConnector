@@ -30,7 +30,7 @@ class ProfileItem extends Component {
                 <Avatar src={profile.user.avatar} style={style.avatar} />
               </Hidden>
             </div>
-            <div class='col-lg-6 col-md-4 col-8'>
+            <div className='col-lg-6 col-md-4 col-8'>
               <Typography variant='h4' gutterBottom>
                 {profile.user.name}
               </Typography>
@@ -55,12 +55,12 @@ class ProfileItem extends Component {
                 </Button>
               </Link>
             </div>
-            <div class='col-md-4'>
+            <div className='col-md-4'>
               <Hidden smDown>
                 <Typography variant='h4'>Skill Set</Typography>
                 <List>
-                  {profile.skills.slice(0, 4).map((skill, index) => (
-                    <ListItem key={index}>
+                  {profile.skills.slice(0, 5).map((skill, index) => (
+                    <ListItem key={index} divider>
                       <ListItemIcon>
                         <Done />
                       </ListItemIcon>
