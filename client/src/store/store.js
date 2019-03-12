@@ -4,12 +4,15 @@ import thunk from "redux-thunk";
 import authReducer from "./reducers/authReducer";
 import errorReducer from "./reducers/errorReducer";
 import profileReducer from "./reducers/profileReducer";
+import postReducer from "./reducers/postReducer";
 
 const middleware = [thunk];
+
 const rootreducer = combineReducers({
   auth: authReducer,
   errors: errorReducer,
-  profile: profileReducer
+  profile: profileReducer,
+  post: postReducer
 });
 
 const store = createStore(
