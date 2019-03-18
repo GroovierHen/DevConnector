@@ -48,9 +48,9 @@ class Navbar extends Component {
           <Link to='/dashboard'>Dashboard</Link>
         </li>
         <li>
-          <Link to='/signin' onClick={this.handleLogout}>
+          <a href='/signin' onClick={this.handleLogout}>
             Logout
-          </Link>
+          </a>
         </li>
         <li>
           <Avatar src={user.avatar} alt={user.name} />
@@ -80,11 +80,11 @@ class Navbar extends Component {
             <ListItemText primary='Dashboard' />
           </ListItem>
         </Link>
-        <Link to='/signin' onClick={this.handleLogout}>
+        <a href='/signin' onClick={this.handleLogout}>
           <ListItem>
             <ListItemText primary='Logout' />
           </ListItem>
-        </Link>
+        </a>
       </List>
     );
     const drawerGuestLinks = (
