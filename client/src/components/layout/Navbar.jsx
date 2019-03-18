@@ -68,6 +68,40 @@ class Navbar extends Component {
       </ul>
     );
 
+    const drawerAuthLinks = (
+      <List className={styles.drawerul}>
+        <Link to='/feed'>
+          <ListItem>
+            <ListItemText primary='Post Feed' />
+          </ListItem>
+        </Link>
+        <Link to='/dashboard'>
+          <ListItem>
+            <ListItemText primary='Dashboard' />
+          </ListItem>
+        </Link>
+        <Link to='/signin' onClick={this.handleLogout}>
+          <ListItem>
+            <ListItemText primary='Logout' />
+          </ListItem>
+        </Link>
+      </List>
+    );
+    const drawerGuestLinks = (
+      <List className={styles.drawerul}>
+        <Link to='/signup'>
+          <ListItem>
+            <ListItemText primary='Sign Up' />
+          </ListItem>
+        </Link>
+        <Link to='/signin'>
+          <ListItem>
+            <ListItemText primary='Sign In' />
+          </ListItem>
+        </Link>
+      </List>
+    );
+
     return (
       <AppBar className={styles.header} position='static'>
         <div className={styles.container}>
@@ -105,11 +139,7 @@ class Navbar extends Component {
           onClose={this.toggleDrawer("right", false)}
           onOpen={this.toggleDrawer("right", true)}
         >
-          <List className={styles.drawerul}>
-            <ListItem>
-              <ListItemText primary='abc' />
-            </ListItem>
-          </List>
+          {isAuthenticated ? drawerAuthLinks : drawerGuestLinks}
         </SwipeableDrawer>
       </AppBar>
     );
